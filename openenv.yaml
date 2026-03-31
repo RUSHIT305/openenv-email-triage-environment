@@ -1,0 +1,69 @@
+version: "1.0"
+name: "customer-support-env"
+description: "A real-world OpenEnv environment for customer support ticket triage and resolution."
+version_tag: "v1"
+author: "AI Studio Build"
+license: "Apache-2.0"
+
+environment:
+  type: "web"
+  url: "https://ais-dev-impmrk2wyf2ajqiy7pthge-505279655269.asia-east1.run.app"
+  api_endpoints:
+    reset: "/api/reset"
+    step: "/api/step"
+    state: "/api/state"
+
+observation_space:
+  type: "object"
+  properties:
+    view:
+      type: "string"
+      description: "The current view or page the agent is on."
+    data:
+      type: "object"
+      description: "The data associated with the current view (e.g., ticket details, search results)."
+    available_actions:
+      type: "array"
+      items:
+        type: "string"
+      description: "A list of actions the agent can take."
+
+action_space:
+  type: "object"
+  oneOf:
+    - type: "object"
+      properties:
+        type: { const: "list_tickets" }
+    - type: "object"
+      properties:
+        type: { const: "view_ticket" }
+        ticket_id: { type: "string" }
+    - type: "object"
+      properties:
+        type: { const: "search_user" }
+        query: { type: "string" }
+    - type: "object"
+      properties:
+        type: { const: "search_order" }
+        query: { type: "string" }
+    - type: "object"
+      properties:
+        type: { const: "respond_to_ticket" }
+        ticket_id: { type: "string" }
+        message: { type: "string" }
+    - type: "object"
+      properties:
+        type: { const: "close_ticket" }
+        ticket_id: { type: "string" }
+        resolution: { type: "string" }
+
+tasks:
+  - id: "task_1_easy"
+    description: "Categorize the ticket #T-101. The user is asking about a missing item in their order."
+    difficulty: "easy"
+  - id: "task_2_medium"
+    description: "Check the status of order #O-2 for user Bob (U-2) and inform him. He is worried it is lost."
+    difficulty: "medium"
+  - id: "task_3_hard"
+    description: "Handle a refund request for order #O-3. User Charlie (U-3) wants a refund because the product is damaged."
+    difficulty: "hard"

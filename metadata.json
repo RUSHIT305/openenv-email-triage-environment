@@ -1,0 +1,5 @@
+{
+  "name": "Customer Support OpenEnv",
+  "description": "A real-world OpenEnv environment for customer support ticket triage and resolution, featuring 3 tasks and programmatic graders.",
+  "requestFramePermissions": []
+}
