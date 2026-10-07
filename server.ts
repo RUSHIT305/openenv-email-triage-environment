@@ -5,7 +5,7 @@ import { CustomerSupportEnv, ActionSchema, TASKS } from "./src/env/CustomerSuppo
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT ?? 3000);
 
   app.use(express.json());
 
@@ -40,6 +40,7 @@ async function startServer() {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
+      host: "0.0.0.0",
     });
     app.use(vite.middlewares);
   } else {
